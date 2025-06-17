@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Fotovoltaico</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+    <!-- Sinistra: Canvas + Testo accanto -->
+    <div class="logo-area">
+        <!-- <canvas id="logoCanvas"></canvas> -->
+        <img src="assets/aeroporto_rimini_logo.png" id="logoCanvas" />
+        <div class="subtitle">Monitoraggio Energia</div>
+    </div>
+
+    <!-- Destra: Loghi -->
+    <div class="logo-right">
+        <img src="https://raw.githubusercontent.com/FrancescoMenga/Omnicon-Test/main/Level4/Menu/Logos/logo_level4_RGB_L4_W.png" />
+        <img src="assets/sgr_logo.png" style="filter: invert(100%);" />
+    </div>
+    </header>
+
+    <main class="kpi-container">
+      <div class="kpi-card" id="carbone">
+        <div class="container-icon">
+            <img src="assets/coal_pv.png" class="kpi-icon" />
+        </div>
+        <div class="kpi-content">
+            <div class="kpi-value">-- t</div>
+            <div class="divider"></div>
+            <div class="kpi-label">Risparmio Carbone </div>
+        </div>
+      </div>
+      <div class="kpi-card" id="alberi">
+        <div class="container-icon">
+            <img src="assets/tree_pv.png" class="kpi-icon" />
+        </div>
+        <div class="kpi-content">
+            <div class="kpi-value">--</div>
+            <div class="divider"></div>
+            <div class="kpi-label">Alberi Piantati</div>
+        </div>
+      </div>
+      <div class="kpi-card" id="co2">
+        <div class="container-icon">
+            <img src="assets/co2_pv.png" class="kpi-icon" />
+        </div>
+        <div class="kpi-content">
+            <div class="kpi-value">-- t</div>
+            <div class="divider"></div>
+            <div class="kpi-label">CO₂ Evitata</div>
+        </div>
+      </div>
+      <div class="kpi-card" id="totale">
+        <div class="container-icon">
+            <img src="assets/power_sun_pv.png" class="kpi-icon" style="filter: invert(100%);" />
+        </div>
+        <div class="kpi-content">
+            <div class="kpi-value">-- kWh</div>
+            <div class="divider"></div>
+            <div class="kpi-label">Produzione Totale</div>
+        </div>
+      </div>
+      <div class="kpi-card" id="giornaliera">
+        <div class="container-icon">
+            <img src="assets/power_sun_pv.png" class="kpi-icon" style="filter: invert(100%);"/>
+        </div>
+        <div class="kpi-content">
+            <div class="kpi-value">-- kWh</div>
+            <div class="divider"></div>
+            <div class="kpi-label">Produzione Giornaliera</div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
