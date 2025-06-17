@@ -1,10 +1,11 @@
 // script.js
 
 const HOST_L4 = 'https://level4.omnicon.it';
-const USERNAME = 'aeroportorimini.schermo@omnicon.it';
-const PASSWORD = '£I#53av3$2iIL]U0';
+const entityId = '854a8910-857f-11ef-a312-7d7684a9aa78';
+const entityType = 'ASSET';
+const keys = ['EGS', 'EMS'];
 
-async function login() {
+async function login(USERNAME,PASSWORD) {
   const res = await axios.post(`${HOST_L4}/api/auth/login`, {
     username: USERNAME,
     password: PASSWORD
@@ -13,9 +14,6 @@ async function login() {
 }
 
 async function getTelemetry(token) {
-    const entityId = '854a8910-857f-11ef-a312-7d7684a9aa78';
-    const entityType = 'ASSET';
-    const keys = ['EGS', 'EMS'];
 
     const res = await axios.get(`${HOST_L4}/api/plugins/telemetry/${entityType}/${entityId}/values/timeseries?keys=${keys.join(',')}&useStrictDataTypes=false`, {
         headers: { 'X-Authorization': `Bearer ${token}` }
@@ -49,15 +47,66 @@ function calcolaIndicatori(data) {
   document.querySelector('#giornaliera .kpi-value').innerText = `${dailyProd.toFixed(0)} kWh`;
 }
 
-async function updateDashboard() {
+function showLoginModal() {
+  document.getElementById("loginModal").style.display = "flex";
+}
+
+function hideLoginModal() {
+  document.getElementById("loginModal").style.display = "none";
+}
+
+function loginFromModal() {
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+
+  if (!user || !pass) {
+    alert("Inserisci username e password");
+    return;
+  }
+
+  localStorage.setItem("l4_user", user);
+  localStorage.setItem("l4_pass", pass);
+  hideLoginModal();
+  autoLogin(user, pass);
+}
+
+
+async function autoLogin(user, pass) {
   try {
-    const token = await login();
+    const token = await login(user, pass);
     const telemetry = await getTelemetry(token);
     calcolaIndicatori(telemetry);
+    setInterval(async () => {
+      const data = await getTelemetry(token);
+      calcolaIndicatori(data);
+    }, 15 * 60 * 1000);
   } catch (err) {
-    console.error('Errore aggiornamento dati:', err);
+    console.error('Login fallito:', err);
+    localStorage.clear();
+    showLoginModal();
   }
 }
 
-updateDashboard();
-setInterval(updateDashboard, 15 * 60 * 1000);
+// Avvio iniziale
+const savedUser = localStorage.getItem("l4_user");
+const savedPass = localStorage.getItem("l4_pass");
+
+if (savedUser && savedPass) {
+  hideLoginModal();
+  autoLogin(savedUser, savedPass);
+} else {
+  showLoginModal();
+}
+
+// async function updateDashboard() {
+//   try {
+//     const token = await login();
+//     const telemetry = await getTelemetry(token);
+//     calcolaIndicatori(telemetry);
+//   } catch (err) {
+//     console.error('Errore aggiornamento dati:', err);
+//   }
+// }
+
+// updateDashboard();
+// setInterval(updateDashboard, 15 * 60 * 1000);
