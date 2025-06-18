@@ -27,16 +27,16 @@ function calcolaIndicatori(data) {
   const EGS = parseFloat(data.EGS?.[0]?.value || 0); // EGS
   const EGE = parseFloat(data.EGE?.[0]?.value || 0); // EGE
   let dailyProd = EGE + EGS;
-  console.log('Total Production:', totalProd);
-  console.log('EGS:', EGS);
-  console.log('EGE:', EGE);
-  console.log('Daily Production:', dailyProd);
+  // console.log('Total Production:', totalProd);
+  // console.log('EGS:', EGS);
+  // console.log('EGE:', EGE);
+  // console.log('Daily Production:', dailyProd);
 
   const coeffCO2 = 0.475; // Coefficiente di emissione CO2 in kg/kWh
   const coeffCoal = 0.4; // Coefficiente di emissione CO2 da carbone in kg/kWh
   const coeffTree = 18.3; // Coefficiente di assorbimento CO2 da parte di un albero in kg/anno
   const treeLifespan = 40; // Vita media di un albero in anni
-  
+
   const alberi = ((coeffCO2 * totalProd) / (coeffTree * treeLifespan)).toFixed(0);
   const tonCO2 = ((coeffCO2 * totalProd)/1000).toFixed(2);
   const carbone = ((coeffCoal * totalProd)/1000).toFixed(2);
@@ -76,9 +76,9 @@ async function autoLogin(user, pass) {
   try {
     const token = await login(user, pass);
     let telemetry = await getTelemetry(token, keysAsset, 'ASSET', entityIdAsset);
-    console.log('Asset Telemetry:', telemetry);
+    // console.log('Asset Telemetry:', telemetry);
     let telemetryETI = await getTelemetry(token, keysDevice, 'DEVICE', entityIdDevice);
-    console.log('Device telemetryETI:', telemetryETI);
+    // console.log('Device telemetryETI:', telemetryETI);
     telemetry = { ...telemetry, ...telemetryETI };
     calcolaIndicatori(telemetry);
     setInterval(async () => {
