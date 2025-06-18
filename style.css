@@ -31,10 +31,20 @@ header {
   padding: 0 30px;
 }
 
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #002855;
+  height: 100px;
+  padding: 0 30px;
+}
+
 .logo-area {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 20px;
   flex: 1; /* fa espandere questa parte per occupare spazio disponibile */
 }
@@ -42,13 +52,13 @@ header {
 #logoCanvas {
   /* border: 2px dashed red; */
   aspect-ratio: 1 / 1;
-  height: 120px;
+  height: 150px;
   flex-shrink: 0; /* impedisce che venga rimpicciolito */
 }
 
 .subtitle {
-  font-size: 3rem;
-  color: #9fd1ff;
+  font-size: 4rem;
+  color: #c7e2fc;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -59,8 +69,15 @@ header {
   gap: 5px;
   align-items: center;
 }
+.logo-full {
+  display: flex;
+  /* gap: 50px; */
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
+}
 
-.logo-right img {
+.logo-right img, .logo-full img {
   height: 80px;
   width: auto;
   object-fit: contain;
@@ -69,13 +86,13 @@ header {
 .kpi-container {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 42px;
     align-items: center;
     flex: 1;
     justify-content: center;
     padding: 20px 50px;
     /* height: calc(100% - 150px); */
-    height: calc(100% - 220px);
+    height: calc(100% - 300px);
 }
 
 .kpi-card {
@@ -85,7 +102,7 @@ header {
     border-radius: 200px;
     padding: 15px 15px;
     color: white;
-    height: calc((100% - 100px) / 5);
+    height: calc((100% - 250px) / 5);
     font-family: sans-serif;
     gap: 50px;
     display: flex;
@@ -98,7 +115,7 @@ header {
     height: 100%;
     aspect-ratio: 1.5 / 1;
     border-radius: 200px;
-    background-color: #ffffff;
+    background-color: #c7e2fc;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -269,14 +286,14 @@ header {
   background: repeating-linear-gradient(
     -45deg,
     #00184581 0 10px,
-    #ffffff 10px 20px
+    #c7e2fc 10px 20px
   );
   animation: scrollBg 10s linear infinite;
   z-index: 0;
 }
 .icon-cart {
   position: absolute;
-  /* left: -160px; */
+  left: -260px;
       width: 100%;
     height: 100%;
     object-fit: contain;
@@ -295,22 +312,22 @@ header {
   50% { transform: translateY(-2px); }
 }
 
-/* .cart-1 { animation: moveCart 30s linear infinite;  animation-delay: 0s;}
+.cart-1 { animation: moveCart 30s linear infinite;  animation-delay: 0s;}
 .cart-2 { animation: moveCart 30s linear infinite; animation-delay: 15s; }
-.cart-3 { animation: moveCart 30s linear infinite; animation-delay: 30s; } */
-/* @keyframes moveCart {
-  0% { left: -160px; }
-  100% { left: 160px; }
-} */
+.cart-3 { animation: moveCart 30s linear infinite; animation-delay: 30s; }
+@keyframes moveCart {
+  0% { left: -260px; }
+  100% { left: 260px; }
+}
 
 
 /* TREE ANIMATION */
     .sun {
       position: absolute;
       left: 10px;
-      top: -15px;
-      width: 60px;
-      height: 60px;
+      top: -10px;
+      width: 80px;
+      height: 80px;
       z-index: 0;
       animation: sunGlow 10s ease-in-out infinite;
     }
@@ -336,15 +353,17 @@ header {
       transform-origin: bottom center;
     }
 
-    .tree-1 { left: 20px; top:-20px; animation-delay: 0s; height: calc(100% - 50px); }
-    /* .tree-2 { left: 70px; top:10px; animation-delay: 0.3s; width: calc(100% - 70px); } */
-    .tree-3 { left: 130px; top:-20px; animation-delay: 0.6s; width: calc(100% - 100px); }
-    .tree-4 { left: -30px; top:-30px; animation-delay: 0.9s; width: calc(100% - 130px); }
-    .tree-5 { left: -50px; top:40px; animation-delay: 1.2s; width: calc(100% - 10px); }
-
+    /* .tree-1 { left: 45px; top:-8px; animation-delay: 0s; height: calc(100% - 60px); width: 100px; z-index: 0;} */
+    .tree-2 { left: 100px; top:40px; animation-delay: 0.3s; width: calc(100% - 110px); }
+    .tree-3 { left: 150px; top:-20px; animation-delay: 0.6s; width: calc(100% - 140px); }
+     .tree-4 { left: 25px; top:-10px; animation-delay: 0.9s; width: calc(100% - 125px); }
+    /* .tree-5 { left: -0px; top:40px; animation-delay: 1.2s; width: 200%; } */
+/* .tree-5{
+  scale: (3.5);
+} */
     @keyframes wind {
       0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(-2deg); }
+      50% { transform: rotate(-3deg); }
     }
 
     @keyframes sunGlow {
