@@ -154,7 +154,7 @@ header {
     animation: glow 2s infinite;
 }
 .logo-l4{
-  margin: 0 auto;
+  margin: 5px auto;
     width: 70%;
     object-fit: contain;
 }
@@ -176,13 +176,14 @@ header {
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  color: white;
 }
 
 
 .modal-content {
-  background: white;
+  background: #002855;
   padding: 40px 30px;
-  border-radius: 8px;
+  border-radius: 10px;
   text-align: center;
   width: 320px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
@@ -191,7 +192,7 @@ header {
 .modal-content h2 {
   font-size: 1.5rem;
   margin-bottom: 30px;
-  color: #333;
+  color: #f7f7f7;
 }
 
 /* Input stile Angular Material */
@@ -211,6 +212,7 @@ header {
   outline: none;
   transition: border-color 0.3s;
   background: transparent;
+  color: white;
 }
 
 .input-group input:focus {
@@ -222,7 +224,7 @@ header {
   top: 12px;
   left: 12px;
   font-size: 1rem;
-  color: #999;
+  /* color: #999; */
   pointer-events: none;
   transition: 0.2s ease all;
 }
@@ -231,8 +233,8 @@ header {
 .input-group input:not(:placeholder-shown) + label {
   top: -8px;
   font-size: 0.75rem;
-  color: #3f51b5;
-  background: white;
+  /* color: #3f51b5; */
+  /* background: white; */
   padding: 0 4px;
 }
 

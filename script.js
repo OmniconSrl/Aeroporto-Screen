@@ -1,9 +1,10 @@
 // script.js
 
 const HOST_L4 = 'https://level4.omnicon.it';
-const entityId = '854a8910-857f-11ef-a312-7d7684a9aa78';
-const entityType = 'ASSET';
-const keys = ['EGS', 'EMS'];
+const entityIdAsset = '854a8910-857f-11ef-a312-7d7684a9aa78';
+const entityIdDevice = '36bc2c50-857e-11ef-a312-7d7684a9aa78';
+const keysAsset = ['EGS', 'EGE']; // EGS, EGE
+const keysDevice = ['ETI']; // EGS, EGE
 
 async function login(USERNAME,PASSWORD) {
   const res = await axios.post(`${HOST_L4}/api/auth/login`, {
@@ -13,7 +14,7 @@ async function login(USERNAME,PASSWORD) {
   return res.data.token;
 }
 
-async function getTelemetry(token) {
+async function getTelemetry(token, keys, entityType, entityId) {
 
     const res = await axios.get(`${HOST_L4}/api/plugins/telemetry/${entityType}/${entityId}/values/timeseries?keys=${keys.join(',')}&useStrictDataTypes=false`, {
         headers: { 'X-Authorization': `Bearer ${token}` }
@@ -22,29 +23,29 @@ async function getTelemetry(token) {
 }
 
 function calcolaIndicatori(data) {
-  const totalProd = parseFloat(data.EMS?.[0]?.value || 0); // EMS
-  const dailyProd = parseFloat(data.EGS?.[0]?.value || 0); // EGS
+  const totalProd = parseFloat(data.ETI?.[0]?.value || 0); // ETI
+  const EGS = parseFloat(data.EGS?.[0]?.value || 0); // EGS
+  const EGE = parseFloat(data.EGE?.[0]?.value || 0); // EGE
+  let dailyProd = EGE + EGS;
+  console.log('Total Production:', totalProd);
+  console.log('EGS:', EGS);
+  console.log('EGE:', EGE);
+  console.log('Daily Production:', dailyProd);
 
   const coeffCO2 = 0.475; // Coefficiente di emissione CO2 in kg/kWh
   const coeffCoal = 0.4; // Coefficiente di emissione CO2 da carbone in kg/kWh
   const coeffTree = 18.3; // Coefficiente di assorbimento CO2 da parte di un albero in kg/anno
   const treeLifespan = 40; // Vita media di un albero in anni
-
-  // Coefficiente di assorbimento CO2 da parte di un albero in kg
-//   const kgCO2 = totalProd * coeffCO2;
-//   const tonCO2 = (kgCO2 / 1000).toFixed(2);
-//   const alberi = (kgCO2 / 21.77).toFixed(0);
-//   const carbone = (totalProd * 0.4 / 1000).toFixed(1);
-
-  const alberi = ((coeffCO2 * dailyProd) / (coeffTree * treeLifespan)).toFixed(0);
-  const tonCO2 = ((coeffCO2 * dailyProd)/1000).toFixed(2);
-  const carbone = ((coeffCoal * dailyProd)/1000).toFixed(2);
+  
+  const alberi = ((coeffCO2 * totalProd) / (coeffTree * treeLifespan)).toFixed(0);
+  const tonCO2 = ((coeffCO2 * totalProd)/1000).toFixed(2);
+  const carbone = ((coeffCoal * totalProd)/1000).toFixed(2);
 
   document.querySelector('#carbone .kpi-value').innerText = `${carbone} t`;
   document.querySelector('#alberi .kpi-value').innerText = `${alberi}`;
   document.querySelector('#co2 .kpi-value').innerText = `${tonCO2} t`;
-  document.querySelector('#totale .kpi-value').innerText = `${totalProd.toFixed(0)} kWh`;
-  document.querySelector('#giornaliera .kpi-value').innerText = `${dailyProd.toFixed(0)} kWh`;
+  document.querySelector('#totale .kpi-value').innerText = `${totalProd.toFixed(0)/1000} MWh`;
+  document.querySelector('#giornaliera .kpi-value').innerText = `${dailyProd.toFixed(0)/1000} kWh`;
 }
 
 function showLoginModal() {
@@ -74,7 +75,11 @@ function loginFromModal() {
 async function autoLogin(user, pass) {
   try {
     const token = await login(user, pass);
-    const telemetry = await getTelemetry(token);
+    let telemetry = await getTelemetry(token, keysAsset, 'ASSET', entityIdAsset);
+    console.log('Asset Telemetry:', telemetry);
+    let telemetryETI = await getTelemetry(token, keysDevice, 'DEVICE', entityIdDevice);
+    console.log('Device telemetryETI:', telemetryETI);
+    telemetry = { ...telemetry, ...telemetryETI };
     calcolaIndicatori(telemetry);
     setInterval(async () => {
       const data = await getTelemetry(token);
