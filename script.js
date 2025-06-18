@@ -118,7 +118,7 @@ function checkForUpdates() {
     if (lastVersion && lastVersion !== currentVersion) {
       console.log("Nuova versione disponibile:", currentVersion);
       localStorage.setItem("site_version", currentVersion); // salva prima
-      // location.reload(); // aggiornamento forzato
+      location.reload(); // aggiornamento forzato
     } else {
       localStorage.setItem("site_version", currentVersion);
       console.log("Nessun aggiornamento, versione attuale:", currentVersion);
