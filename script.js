@@ -1,5 +1,6 @@
 // script.js
 
+
 const HOST_L4 = 'https://level4.omnicon.it';
 const entityIdAsset = '854a8910-857f-11ef-a312-7d7684a9aa78';
 const entityIdDevice = '36bc2c50-857e-11ef-a312-7d7684a9aa78';
@@ -27,10 +28,6 @@ function calcolaIndicatori(data) {
   const EGS = parseFloat(data.EGS?.[0]?.value || 0); // EGS
   const EGE = parseFloat(data.EGE?.[0]?.value || 0); // EGE
   let dailyProd = EGE + EGS;
-  // console.log('Total Production:', totalProd);
-  // console.log('EGS:', EGS);
-  // console.log('EGE:', EGE);
-  // console.log('Daily Production:', dailyProd);
 
   const coeffCO2 = 0.475; // Coefficiente di emissione CO2 in kg/kWh
   const coeffCoal = 0.4; // Coefficiente di emissione CO2 da carbone in kg/kWh
@@ -76,42 +73,57 @@ async function autoLogin(user, pass) {
   try {
     const token = await login(user, pass);
     let telemetry = await getTelemetry(token, keysAsset, 'ASSET', entityIdAsset);
-    // console.log('Asset Telemetry:', telemetry);
     let telemetryETI = await getTelemetry(token, keysDevice, 'DEVICE', entityIdDevice);
-    // console.log('Device telemetryETI:', telemetryETI);
     telemetry = { ...telemetry, ...telemetryETI };
     calcolaIndicatori(telemetry);
     setInterval(async () => {
-      const data = await getTelemetry(token);
-      calcolaIndicatori(data);
+      let telemetry = await getTelemetry(token, keysAsset, 'ASSET', entityIdAsset);
+      let telemetryETI = await getTelemetry(token, keysDevice, 'DEVICE', entityIdDevice);
+      telemetry = { ...telemetry, ...telemetryETI };
+      calcolaIndicatori(telemetry);
     }, 15 * 60 * 1000);
   } catch (err) {
     console.error('Login fallito:', err);
-    localStorage.clear();
     showLoginModal();
   }
 }
 
-// Avvio iniziale
-const savedUser = localStorage.getItem("l4_user");
-const savedPass = localStorage.getItem("l4_pass");
 
-if (savedUser && savedPass) {
-  hideLoginModal();
-  autoLogin(savedUser, savedPass);
-} else {
-  showLoginModal();
+document.addEventListener("DOMContentLoaded", () => {
+  const savedUser = localStorage.getItem("l4_user");
+  const savedPass = localStorage.getItem("l4_pass");
+
+  if (savedUser && savedPass) {
+    hideLoginModal();
+    autoLogin(savedUser, savedPass);
+  } else {
+    showLoginModal();
+  }
+
+  
+  checkForUpdates(); // controllo iniziale
+  setInterval(checkForUpdates, 1 * 60 * 1000); // ogni 1 minuto
+});
+
+
+function checkForUpdates() {
+  axios.get('version.json', {
+    headers: { 'Cache-Control': 'no-store' },
+    params: { t: new Date().getTime() } // forziamo anti-cache con query param
+  })
+  .then(res => {
+    const currentVersion = res.data.version;
+    const lastVersion = localStorage.getItem("site_version");
+
+    if (lastVersion && lastVersion !== currentVersion) {
+      console.log("Nuova versione disponibile:", currentVersion);
+      location.reload(); // aggiornamento forzato
+    } else {
+      localStorage.setItem("site_version", currentVersion);
+      console.log("Nessun aggiornamento, versione attuale:", currentVersion);
+    }
+  })
+  .catch(err => {
+    console.warn("Impossibile controllare versione:", err);
+  });
 }
-
-// async function updateDashboard() {
-//   try {
-//     const token = await login();
-//     const telemetry = await getTelemetry(token);
-//     calcolaIndicatori(telemetry);
-//   } catch (err) {
-//     console.error('Errore aggiornamento dati:', err);
-//   }
-// }
-
-// updateDashboard();
-// setInterval(updateDashboard, 15 * 60 * 1000);
