@@ -81,7 +81,7 @@ async function autoLogin(user, pass) {
       let telemetryETI = await getTelemetry(token, keysDevice, 'DEVICE', entityIdDevice);
       telemetry = { ...telemetry, ...telemetryETI };
       calcolaIndicatori(telemetry);
-    }, 15 * 60 * 1000);
+    }, 1 * 60 * 1000);
   } catch (err) {
     console.error('Login fallito:', err);
     showLoginModal();
@@ -99,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     showLoginModal();
   }
-
   
   checkForUpdates(); // controllo iniziale
   setInterval(checkForUpdates, 1 * 60 * 1000); // ogni 1 minuto
