@@ -95,19 +95,20 @@ footer {
 }
 
 .kpi-card {
-    background: #002855;
-    border: 1px solid #1f3557;
-    width: 100%;
-    border-radius: 200px;
-    padding: 15px 15px;
-    color: white;
-    height: calc((100% - 250px) / 5);
-    font-family: sans-serif;
-    gap: 50px;
-    display: flex;
-    align-items: stretch;
-    justify-content: flex-start;
-     transition: transform 0.4s ease;
+  will-change: transform;
+  background: #002855;
+  border: 1px solid #1f3557;
+  width: 100%;
+  border-radius: 200px;
+  padding: 15px 15px;
+  color: white;
+  height: calc((100% - 250px) / 5);
+  font-family: sans-serif;
+  gap: 50px;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  transition: transform 0.4s ease-in-out;
 }
 
 .container-icon{
@@ -130,9 +131,10 @@ footer {
     padding: 0;
 }
 
-.kpi-card:hover {
-    transform: scale(1.02);
-}
+/* .kpi-card:hover {
+     transform: scale(1.02); 
+      transition: transform 0.5s ease-in-out;
+} */
 
 .kpi-icon {
     width: 100%;
@@ -448,7 +450,7 @@ footer {
 }
 .luna-container{
   display: flex;
-  gap: 170px;
+  gap: 250px;
   flex-direction: column;
   animation: rotate 35s linear infinite;
   /* transform-origin: bottom; */

@@ -7,6 +7,13 @@ const entityIdDevice = '36bc2c50-857e-11ef-a312-7d7684a9aa78';
 const keysAsset = ['EGS', 'EGE']; // EGS, EGE
 const keysDevice = ['ETI']; // EGS, EGE
 
+let currentIndex = 0;
+let lastSwitchTime = 0;
+const kpiCards = document.querySelectorAll('.kpi-card');
+const switchInterval = 15000; // 15s
+
+let telemetryInterval = null;
+
 async function login(USERNAME,PASSWORD) {
   const res = await axios.post(`${HOST_L4}/api/auth/login`, {
     username: USERNAME,
@@ -74,14 +81,9 @@ async function autoLogin(user, pass) {
     const token = await login(user, pass);
     let telemetry = await getTelemetry(token, keysAsset, 'ASSET', entityIdAsset);
     let telemetryETI = await getTelemetry(token, keysDevice, 'DEVICE', entityIdDevice);
-    telemetry = { ...telemetry, ...telemetryETI };
-    calcolaIndicatori(telemetry);
-    setInterval(async () => {
-      let telemetry = await getTelemetry(token, keysAsset, 'ASSET', entityIdAsset);
-      let telemetryETI = await getTelemetry(token, keysDevice, 'DEVICE', entityIdDevice);
-      telemetry = { ...telemetry, ...telemetryETI };
-      calcolaIndicatori(telemetry);
-    }, 45 * 60 * 1000);
+    calcolaIndicatori({ ...telemetry, ...telemetryETI });
+    startTelemetryLoop(token);
+    requestAnimationFrame(animateKpiLoop);
   } catch (err) {
     console.error('Login fallito:', err);
     showLoginModal();
@@ -115,15 +117,61 @@ function checkForUpdates() {
     const lastVersion = localStorage.getItem("site_version");
 
     if (lastVersion && lastVersion !== currentVersion) {
-      console.log("Nuova versione disponibile:", currentVersion);
+      // console.log("Nuova versione disponibile:", currentVersion);
       localStorage.setItem("site_version", currentVersion); // salva prima
       location.reload(); // aggiornamento forzato
     } else {
       localStorage.setItem("site_version", currentVersion);
-      console.log("Nessun aggiornamento, versione attuale:", currentVersion);
+      // console.log("Nessun aggiornamento, versione attuale:", currentVersion);
     }
   })
   .catch(err => {
     console.warn("Impossibile controllare versione:", err);
   });
+}
+
+function animateKpiLoop(timestamp) {
+  if (!lastSwitchTime) lastSwitchTime = timestamp;
+
+  const elapsed = timestamp - lastSwitchTime;
+
+  // Protezione: solo se il tempo trascorso è entro limiti accettabili
+  if (elapsed >= switchInterval && elapsed <= switchInterval * 2) {
+    // Reset trasformazioni
+    kpiCards.forEach(card => {
+      card.style.transform = 'scale(1)';
+      card.style.transition = 'transform 0.9s ease-in-out';
+    });
+
+    // Applica trasformazione al prossimo elemento
+    const currentCard = kpiCards[currentIndex];
+    currentCard.style.transform = 'scale(1.02)';
+
+    // Prepara il prossimo ciclo
+    currentIndex = (currentIndex + 1) % kpiCards.length;
+    lastSwitchTime = timestamp;
+  }
+
+//   while (elapsed >= switchInterval) {
+//   kpiCards.forEach(card => card.style.transform = 'scale(1)');
+//   kpiCards[currentIndex].style.transform = 'scale(1.02)';
+//   currentIndex = (currentIndex + 1) % kpiCards.length;
+//   lastSwitchTime += switchInterval; // aggiungi invece di riassegnare timestamp
+// }
+
+
+  requestAnimationFrame(animateKpiLoop);
+}
+
+function startTelemetryLoop(token) {
+  if (telemetryInterval) clearInterval(telemetryInterval);
+  telemetryInterval = setInterval(async () => {
+    try {
+      const telemetry = await getTelemetry(token, keysAsset, 'ASSET', entityIdAsset);
+      const telemetryETI = await getTelemetry(token, keysDevice, 'DEVICE', entityIdDevice);
+      calcolaIndicatori({ ...telemetry, ...telemetryETI });
+    } catch (e) {
+      console.warn("Errore polling dati:", e);
+    }
+  }, 45 * 60 * 1000);
 }
