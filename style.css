@@ -135,14 +135,14 @@ footer {
 }
 
 .kpi-icon {
-    width: 250px;
-    height: 250px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     padding: 20px;
 }
 
 .kpi-value {
-    font-size: 3.5rem;
+    font-size: 4.3rem;
     font-weight: bold;
     margin-bottom: 5px;
 }
@@ -156,7 +156,7 @@ footer {
 }
 
 .kpi-label {
-    font-size: 3rem;
+    font-size: 4.3rem;
     color: #cccccc;
 }
 
@@ -278,16 +278,16 @@ footer {
 
 .background-loop {
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   left: 0;
   width: 200%;
-  height: 28px;
+  height: 60px;
   background: repeating-linear-gradient(
     -45deg,
     #00184581 0 10px,
     #c7e2fc 10px 20px
   );
-  animation: scrollBg 10s linear infinite;
+  animation: scrollBg 15s linear infinite;
   z-index: 0;
 }
 .icon-cart {
@@ -308,15 +308,15 @@ footer {
 
 @keyframes bobbing {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
+  50% { transform: translateY(-3px); }
 }
 
-.cart-1 { animation: moveCart 30s linear infinite;  animation-delay: 0s;}
-.cart-2 { animation: moveCart 30s linear infinite; animation-delay: 15s; }
-.cart-3 { animation: moveCart 30s linear infinite; animation-delay: 30s; }
+.cart-1 { animation: moveCart 30s linear infinite;  animation-delay: 0s; width: 80%; height: 80%; }
+.cart-2 { animation: moveCart 30s linear infinite; animation-delay: 15s; width: 80%; height: 80%; }
+.cart-3 { animation: moveCart 30s linear infinite; animation-delay: 30s; width: 80%; height: 80%; }
 @keyframes moveCart {
   0% { left: -260px; }
-  100% { left: 260px; }
+  100% { left: 360px; }
 }
 
 
@@ -328,7 +328,7 @@ footer {
       width: 80px;
       height: 80px;
       z-index: 0;
-      animation: sunGlow 10s ease-in-out infinite;
+      animation: sunGlow 30s linear infinite;
     }
     
     
@@ -336,7 +336,7 @@ footer {
       position: relative;
       width: 200px;
       height: 150px;
-      background: linear-gradient(to right, transparent 50%, #ffdf80 95%); /* sole a destra */
+      /* background: linear-gradient(to right, transparent 50%, black 95%); */
       border-radius: 50px;
       overflow: hidden;
     }
@@ -351,22 +351,220 @@ footer {
       animation: wind 6s ease-in-out infinite;
       transform-origin: bottom center;
     }
-
+    
     /* .tree-1 { left: 45px; top:-8px; animation-delay: 0s; height: calc(100% - 60px); width: 100px; z-index: 0;} */
-    .tree-2 { left: 100px; top:40px; animation-delay: 0.3s; width: calc(100% - 110px); }
-    .tree-3 { left: 150px; top:-20px; animation-delay: 0.6s; width: calc(100% - 140px); }
-     .tree-4 { left: 25px; top:-10px; animation-delay: 0.9s; width: calc(100% - 125px); }
-    /* .tree-5 { left: -0px; top:40px; animation-delay: 1.2s; width: 200%; } */
-/* .tree-5{
-  scale: (3.5);
-} */
+    .tree-2 { left: 100px; top:40px; animation-delay: 0.3s; width: 60%; }
+    .tree-3 { right: 0%; bottom:15%; animation-delay: 0.6s; width: 45%; }
+    .tree-4 { left: 0%; top:-10px; animation-delay: 0.9s; width: 50%; }
+    .tree-5 { left: -20%; bottom :10%; animation-delay: 1.2s; }
+    .tree-9 { left: -35%; top :-15%; animation-delay: 1.2s; }
+    .tree-6 { left: 30%; bottom :10%; animation-delay: 0.3s; }
+    .tree-7 { left: 30%; top :-25%; animation-delay: 0.9s; }
+    .tree-8 { left: 16%; top :7%; animation-delay: 0.6s; }
+    /* .tree-5{
+      scale: (3.5);
+    } */
     @keyframes wind {
       0%, 100% { transform: rotate(0deg); }
       50% { transform: rotate(-3deg); }
     }
-
-    @keyframes sunGlow {
-      0%, 100% { filter: brightness(1); }
-      50% { filter: brightness(1.2); }
+    
+    .grass2{
+      z-index: 1;
+      position: absolute;
+      /* width: 60px; */
+      bottom: 0;
+      opacity: 0.6;
+      animation: grass 6s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+  @keyframes grass {
+    0%, 100% { transform: rotate(0deg) scale(0.3); }
+    50% { transform: rotate(-5deg) scale(0.28); }
     }
     
+    @keyframes sunGlow {
+      0% { opacity: 1; transform: rotate(0deg) scale(1.2);}
+      50% { opacity: 0.8; transform: rotate(180deg) scale(1.5); left: 15px; top: -5px; }
+      100% { opacity: 1; transform: rotate(360deg) scale(1.2); left: 10px; top: -10px; }
+    }
+    
+    
+    .production-day-icon{
+      animation: rotate 26s linear infinite;
+      transform-origin: 49% 47%;
+    }
+    
+    @keyframes rotate {
+      0%{ transform: rotate(0deg); }
+      50% { transform: rotate(180deg); background-color: #001845a5; }
+      100% { transform: rotate(360deg); }
+    }
+    .earth{
+      position: absolute;
+      left: 3%;
+      top: 60%;
+      transform: scale(1.8);
+      z-index: 10;
+    }
+    .sun2{
+      /* animation: rotate 26s linear infinite;
+      transform-origin: 49% 47%; */
+      /* position: absolute;
+      left: 0%;
+      top: 0%; */
+      width: 30%;
+      height: 30%;
+      /* z-index: -1; */
+      /* filter: blur(20px); */
+      opacity: 1;
+      /* border: 2px solid #98ec08; */
+    }
+    .luna{
+      /* position: absolute;  */
+      /* border: 2px solid #fff; */
+      
+      /* bottom: 10%; */
+      /* left: 0%; */
+      /* transform: translate(50%, 0%); */
+      width: 20%;
+      transform: scaleX(-1);
+      
+      height: 40%;
+      /* z-index: -1; */
+      /* filter: blur(20px); */
+      opacity: 1;
+    }
+    .anchor-point {
+      /* position: absolute; */
+      /* bottom:% !important; */
+      left: 44%  !important;
+      top: 21%  !important;
+      width: 6px !important;
+      height: 6px !important;
+  background: red;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.luna-container{
+  display: flex;
+  gap: 170px;
+  flex-direction: column;
+  animation: rotate 35s linear infinite;
+  /* transform-origin: bottom; */
+  /* border: 2px dashed #f50909;   */
+  position: absolute;
+  left: -50%;
+  top: -10%;
+  width: 200%;
+  height: 240%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tp-1{
+  animation: sunScale 25s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: brightness(0);
+}
+.tp-2{
+  animation: sunRotate 25s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: brightness(0);
+}
+    @keyframes sunRotate {
+      0%{ transform: rotate(0deg); }
+      50% { transform: rotate(180deg) scale(1.3); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes sunScale {
+      /* 0%{ transform: rotate(0deg); } */
+      50% { transform: scale(1.3); }
+      /* 100% { transform: rotate(360deg); } */
+    }
+
+    /* .grass {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blade {
+  width: 6px;
+  height: 15px;
+  background-color: #000000;
+  animation: sway 2.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.blade.delay-1 { animation-delay: 0.2s; }
+.blade.delay-2 { animation-delay: 0.4s; }
+.blade.delay-3 { animation-delay: 0.6s; }
+.blade.delay-4 { animation-delay: 0.8s; }
+
+@keyframes sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-10deg); }
+} */
+
+.co2-icon{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* padding: 20px; */
+  /* animation: bobbing 2s ease-in-out infinite; */
+}
+
+#co2-3, #co2-2{
+  opacity: 0;
+  transform: translatey(5%);
+  filter: drop-shadow(0px -4px 0px #c7e2fc) drop-shadow(0px 4px 0px #c7e2fc) drop-shadow(-4px 0px 0px #c7e2fc) drop-shadow(4px 0px 0px #c7e2fc);
+}
+
+#co2-3 {
+  animation: co2 20s linear infinite;
+  animation-delay: 9s;
+}
+#co2-2 {
+  animation: co2 18s linear infinite;
+  animation-delay: 7s;
+}
+
+#co2-sun{
+  animation: sunRotate 9s linear infinite;
+  transform-origin: 49% 28%;
+  
+}
+@keyframes co2 {
+  0% { opacity: 0; transform: translatey(5%) scale(0.8); }
+  25% { opacity: 0; }
+  50% { opacity: 1; }
+  80% { opacity: 0; transform: translateY(-5%) scale(1); }
+  100% { opacity: 0; }
+}
+
+#co2-plane{
+  animation: co2-plane 20s linear infinite;
+  transform-origin: 49% 28%;
+  
+}
+@keyframes co2-plane {
+  0% {  transform: translate(-100%, 30%) scale(0.8); }
+  25% { opacity: 1; }
+  /* 50% { opacity: 1; } */
+  75% { opacity: 1; }
+  100% {  transform: translate(100%, -30%) scale(1.2); }
+}

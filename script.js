@@ -34,15 +34,15 @@ function calcolaIndicatori(data) {
   const coeffTree = 18.3; // Coefficiente di assorbimento CO2 da parte di un albero in kg/anno
   const treeLifespan = 40; // Vita media di un albero in anni
 
-  const alberi = ((coeffCO2 * totalProd) / (coeffTree * treeLifespan)).toFixed(0);
+  const alberi = ((coeffCO2 * totalProd) / (coeffTree * treeLifespan)).toFixed(2);
   const tonCO2 = ((coeffCO2 * totalProd)/1000).toFixed(2);
   const carbone = ((coeffCoal * totalProd)/1000).toFixed(2);
 
   document.querySelector('#carbone .kpi-value').innerText = `${carbone} t`;
   document.querySelector('#alberi .kpi-value').innerText = `${alberi} Alberi`;
   document.querySelector('#co2 .kpi-value').innerText = `${tonCO2} t`;
-  document.querySelector('#totale .kpi-value').innerText = `${totalProd.toFixed(0)/1000} MWh`;
-  document.querySelector('#giornaliera .kpi-value').innerText = `${dailyProd.toFixed(0)/1000} kWh`;
+  document.querySelector('#totale .kpi-value').innerText = `${(totalProd / 1000).toFixed(2)} MWh`;
+  document.querySelector('#giornaliera .kpi-value').innerText = `${(dailyProd / 1000).toFixed(2)} kWh`;
 }
 
 function showLoginModal() {
@@ -81,7 +81,7 @@ async function autoLogin(user, pass) {
       let telemetryETI = await getTelemetry(token, keysDevice, 'DEVICE', entityIdDevice);
       telemetry = { ...telemetry, ...telemetryETI };
       calcolaIndicatori(telemetry);
-    }, 1 * 60 * 1000);
+    }, 45 * 60 * 1000);
   } catch (err) {
     console.error('Login fallito:', err);
     showLoginModal();
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   checkForUpdates(); // controllo iniziale
-  setInterval(checkForUpdates, 1 * 60 * 1000); // ogni 1 minuto
+  setInterval(checkForUpdates, 60 * 60 * 1000); // ogni 60 minuti
 });
 
 
