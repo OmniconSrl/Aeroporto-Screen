@@ -10,7 +10,7 @@ const keysDevice = ['ETI']; // EGS, EGE
 let currentIndex = 0;
 let lastSwitchTime = 0;
 const kpiCards = document.querySelectorAll('.kpi-card');
-const switchInterval = 15000; // 15s
+const switchInterval = 2500; // 15s
 
 let telemetryInterval = null;
 
@@ -136,16 +136,16 @@ function animateKpiLoop(timestamp) {
   const elapsed = timestamp - lastSwitchTime;
 
   // Protezione: solo se il tempo trascorso è entro limiti accettabili
-  if (elapsed >= switchInterval && elapsed <= switchInterval * 2) {
+  if (elapsed >= switchInterval ) {
     // Reset trasformazioni
     kpiCards.forEach(card => {
-      card.style.transform = 'scale(1)';
-      card.style.transition = 'transform 0.9s ease-in-out';
+      card.style.transform = 'scale(0.98)';
+      card.style.transition = 'transform 1s ease-in-out';
     });
 
     // Applica trasformazione al prossimo elemento
     const currentCard = kpiCards[currentIndex];
-    currentCard.style.transform = 'scale(1.02)';
+    currentCard.style.transform = 'scale(1.03)';
 
     // Prepara il prossimo ciclo
     currentIndex = (currentIndex + 1) % kpiCards.length;
