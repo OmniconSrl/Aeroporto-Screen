@@ -6,7 +6,7 @@ const entityIdAsset = 'df769a70-4544-11f0-acb3-7d1711d9d68a';
 const entityIdDevice = '0fd19aa1-45d9-11f0-acb3-7d1711d9d68a';
 const keysAsset = ['EGS', 'EGE']; // EGS, EGE
 const keysDevice = ['ETI_001']; // EGS, EGE
-
+  
 let currentIndex = 0;
 let lastSwitchTime = 0;
 const kpiCards = document.querySelectorAll('.kpi-card');
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   checkForUpdates(); // controllo iniziale
-  setInterval(checkForUpdates, 1 * 60 * 1000); // ogni 1 minuto
+  setInterval(checkForUpdates, 60 * 60 * 1000); // ogni 60 minuti
 });
 
 
