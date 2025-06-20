@@ -2,11 +2,11 @@
 
 
 const HOST_L4 = 'https://level4.omnicon.it';
-const entityIdAsset = '854a8910-857f-11ef-a312-7d7684a9aa78';
-const entityIdDevice = '36bc2c50-857e-11ef-a312-7d7684a9aa78';
+const entityIdAsset = 'df769a70-4544-11f0-acb3-7d1711d9d68a';
+const entityIdDevice = '0fd19aa1-45d9-11f0-acb3-7d1711d9d68a';
 const keysAsset = ['EGS', 'EGE']; // EGS, EGE
-const keysDevice = ['ETI']; // EGS, EGE
-
+const keysDevice = ['ETI_001']; // EGS, EGE
+  
 let currentIndex = 0;
 let lastSwitchTime = 0;
 const kpiCards = document.querySelectorAll('.kpi-card');
@@ -31,7 +31,7 @@ async function getTelemetry(token, keys, entityType, entityId) {
 }
 
 function calcolaIndicatori(data) {
-  const totalProd = parseFloat(data.ETI?.[0]?.value || 0); // ETI
+  const totalProd = parseFloat(data["ETI_001"]?.[0]?.value || 0); // ETI
   const EGS = parseFloat(data.EGS?.[0]?.value || 0); // EGS
   const EGE = parseFloat(data.EGE?.[0]?.value || 0); // EGE
   let dailyProd = EGE + EGS;
@@ -48,8 +48,8 @@ function calcolaIndicatori(data) {
   document.querySelector('#carbone .kpi-value').innerText = `${carbone} t`;
   document.querySelector('#alberi .kpi-value').innerText = `${alberi} Alberi`;
   document.querySelector('#co2 .kpi-value').innerText = `${tonCO2} t`;
-  document.querySelector('#totale .kpi-value').innerText = `${(totalProd / 1000).toFixed(2)} MWh`;
-  document.querySelector('#giornaliera .kpi-value').innerText = `${(dailyProd / 1000).toFixed(2)} kWh`;
+  document.querySelector('#totale .kpi-value').innerText = `${(totalProd / 1000000).toFixed(2)} GWh`;
+  document.querySelector('#giornaliera .kpi-value').innerText = `${(dailyProd / 1000000).toFixed(2)} MWh`;
 }
 
 function showLoginModal() {
