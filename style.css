@@ -45,19 +45,21 @@ footer {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 40px;
   flex: 1; /* fa espandere questa parte per occupare spazio disponibile */
 }
 
 #logoCanvas {
   /* border: 2px dashed red; */
-  aspect-ratio: 1 / 1;
-  height: 150px;
+  aspect-ratio: 4 / 1;
+  height: 130px;
   flex-shrink: 0; /* impedisce che venga rimpicciolito */
 }
 
 .subtitle {
-  font-size: 4rem;
+  height: 130px;
+  line-height: 100px;
+  font-size: 4.3rem;
   color: #c7e2fc;
   white-space: nowrap;
   overflow: hidden;
@@ -328,8 +330,8 @@ footer {
       position: absolute;
       left: 10px;
       top: -10px;
-      width: 80px;
-      height: 80px;
+      width: 115px;
+      height: 115px;
       z-index: 0;
       animation: sunGlow 30s linear infinite;
     }
@@ -570,4 +572,22 @@ footer {
   /* 50% { opacity: 1; } */
   75% { opacity: 1; }
   100% {  transform: translate(100%, -30%) scale(1.2); }
+}
+
+.energy-full {
+  clip-path: inset(100% 0 0 0); /* inizialmente completamente nascosta */
+  animation: fillUp 5s steps(4) forwards infinite;
+}
+
+.energy-full, .energy-empty {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@keyframes fillUp {
+  0%   { clip-path: inset(100% 0 0 0); }
+  33%  { clip-path: inset(66% 0 0 0); }
+  66%  { clip-path: inset(33% 0 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
 }

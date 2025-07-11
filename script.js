@@ -5,7 +5,7 @@ const HOST_L4 = 'https://level4.omnicon.it';
 const entityIdAsset = 'df769a70-4544-11f0-acb3-7d1711d9d68a';
 const entityIdDevice = '0fd19aa1-45d9-11f0-acb3-7d1711d9d68a';
 const keysAsset = ['EGS', 'EGE']; // EGS, EGE
-const keysDevice = ['ETI_001']; // EGS, EGE
+const keysDevice = ['ETI_001',"PAT_001"]; // ETI, PAT
   
 let currentIndex = 0;
 let lastSwitchTime = 0;
@@ -31,6 +31,7 @@ async function getTelemetry(token, keys, entityType, entityId) {
 }
 
 function calcolaIndicatori(data) {
+  const prodAttuale = parseFloat(data["PAT_001"]?.[0]?.value || 0); // PAT
   const totalProd = parseFloat(data["ETI_001"]?.[0]?.value || 0); // ETI
   const EGS = parseFloat(data.EGS?.[0]?.value || 0); // EGS
   const EGE = parseFloat(data.EGE?.[0]?.value || 0); // EGE
@@ -41,12 +42,11 @@ function calcolaIndicatori(data) {
   const coeffTree = 18.3; // Coefficiente di assorbimento CO2 da parte di un albero in kg/anno
   const treeLifespan = 40; // Vita media di un albero in anni
 
-  const alberi = ((coeffCO2 * totalProd) / (coeffTree * treeLifespan)).toFixed(2);
   const tonCO2 = ((coeffCO2 * totalProd)/1000).toFixed(2);
   const carbone = ((coeffCoal * totalProd)/1000).toFixed(2);
 
   document.querySelector('#carbone .kpi-value').innerText = `${carbone} t`;
-  document.querySelector('#alberi .kpi-value').innerText = `${alberi} Alberi`;
+  document.querySelector('#prod-attuale .kpi-value').innerText = `${(totalProd / 1000).toFixed(2)} kW`;
   document.querySelector('#co2 .kpi-value').innerText = `${tonCO2} t`;
   document.querySelector('#totale .kpi-value').innerText = `${(totalProd / 1000000).toFixed(2)} GWh`;
   document.querySelector('#giornaliera .kpi-value').innerText = `${(dailyProd / 1000000).toFixed(2)} MWh`;
