@@ -46,9 +46,9 @@ function calcolaIndicatori(data) {
   const carbone = ((coeffCoal * totalProd)/1000).toFixed(2);
 
   document.querySelector('#carbone .kpi-value').innerText = `${carbone} t`;
-  document.querySelector('#prod-attuale .kpi-value').innerText = `${(totalProd / 1000).toFixed(2)} kW`;
+  document.querySelector('#prod-attuale .kpi-value').innerText = `${(prodAttuale / 1000).toFixed(2)} kW`;
   document.querySelector('#co2 .kpi-value').innerText = `${tonCO2} t`;
-  document.querySelector('#totale .kpi-value').innerText = `${(totalProd / 1000000).toFixed(2)} GWh`;
+  document.querySelector('#totale .kpi-value').innerText = `${(totalProd / 1000).toFixed(2)} MWh`;
   document.querySelector('#giornaliera .kpi-value').innerText = `${(dailyProd / 1000000).toFixed(2)} MWh`;
 }
 
