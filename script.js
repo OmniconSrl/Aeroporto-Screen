@@ -175,5 +175,5 @@ function startTelemetryLoop(token) {
     } catch (e) {
       console.warn("Errore polling dati:", e);
     }
-  }, 45 * 60 * 1000);
+  }, 5 * 60 * 1000);
 }
