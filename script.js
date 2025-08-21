@@ -106,6 +106,12 @@ document.addEventListener("DOMContentLoaded", () => {
   
   checkForUpdates(); // controllo iniziale
   setInterval(checkForUpdates, 60 * 60 * 1000); // ogni 60 minuti
+  
+  // refresh pagina ogni 60 minuti
+  setInterval(() => {
+    location.reload();
+  }, 3600000);
+
 });
 
 
